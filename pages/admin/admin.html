@@ -1,0 +1,96 @@
+<br><br><br><br><br>
+<div class="hide" id="modalBack"></div>
+<div class="container-fluid">
+	<div class="row" id="breadCrumb">
+	</div>
+	<div id="blogsCreate" class="menu">
+		<div id="blogs">
+
+		</div>
+		<form onsubmit="formSubmit(event);">
+			<button>Submit</button>
+		</form>
+	</div>
+	<div id="quiz" class="menu">
+		this is quiz page
+	</div>
+</div>
+<div id="loginModal">
+	<div class="modalBack"></div>
+	<div class="loginForm center">
+		<form onsubmit="login(event)">
+			<div>
+				<label>Name</label>
+				<input class="form-control" id="name">
+			</div>
+			<div>
+				<label>Password</label>
+				<input class="form-control" id="password">
+			</div>
+			<button type="submit" class="btn btn-default centerH relative">Submit</button>
+		</form>
+	</div>
+</div>
+<script>
+	$(".menu").addClass("hide");
+	var pages = ["Blogs Create", "Quiz Create"];
+	var currentPage = "";
+	var breadCrumb = document.getElementById("breadCrumb");
+	pages.forEach(function(eachPage) {
+		let eachButton = document.createElement("div");
+		eachButton.setAttribute("class", "col-sm-3");
+		eachButton.innerHTML = eachPage;
+		eachButton.onclick = function(element) {
+			console.log(element);
+			console.log(this.innerHTML);
+			switch (this.innerHTML) {
+				case "Blogs Create":
+					// statements_1
+					$(".menu").addClass('hide');
+					$("#blogsCreate").removeClass('hide');
+					break;
+				case "Quiz Create":
+					console.log("quiz page");
+					$(".menu").addClass('hide');
+					$("#quiz").removeClass('hide');
+					break;
+				default:
+					// statements_def
+					break;
+			}
+		}
+		breadCrumb.append(eachButton);
+	});
+	function login(event) {
+		event.preventDefault();
+		let name = $('#name').val();
+		let passwd = $('#password').val();
+		request("auth/login", 
+                    {
+                    	"name": name,
+                    	"password": passwd,
+                	},
+                    function (data) {
+                    	if (data.token.length > 1) {
+                    		$('#loginModal').hide();
+                    	}
+                    	console.log("setting token to", data.token);
+                    	localStorage.setItem("token", data.token);
+                    });
+	}
+	function formSubmit(event) {
+		event.preventDefault();
+		let jwt = localStorage.getItem("token");
+		postWithJWT("admin/addBlog", 
+                    {
+                    	"jwt": jwt
+                	}, 
+                    function (data) {
+                        console.log(data);
+                    });
+	}
+	function closeModal() {
+		document.getElementById("editModal").className = "hide";
+		document.getElementById("modalBack").className = "hide";
+	}
+</script>

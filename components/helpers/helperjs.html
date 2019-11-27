@@ -1,0 +1,39 @@
+<script>
+  var baseUrl = "http://localhost:3000/";
+	function request(url, data, callback) {
+        $.ajax({
+           type: "POST",
+           url: baseUrl + url,
+           dataType: "json",
+           success: function (msg) {
+               callback(msg);
+           },
+           error: (data) => {
+            console.log('error hai re baba', data);
+           },
+           data: JSON.stringify(data)
+       });
+    }
+    function postWithJWT(url, data, callback) {
+      console.log("auth token is", localStorage.getItem('token'));
+      $.ajax({
+        url: baseUrl + url,
+        type: "POST",
+        beforeSend: function(request){
+                request.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+        dataType: 'json',
+        data: JSON.stringify(data),
+      })
+      .done(function() {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+      
+    }
+</script>

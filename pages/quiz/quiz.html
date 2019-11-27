@@ -1,0 +1,200 @@
+<br><br><br><br>
+<div class="row">
+</div>
+<h1 id="blindit">
+	quiz component works
+</h1>
+<div id="btnContainer">
+	<button class="btn btn-primary"> 
+		PLAY QUIZ
+	</button>
+	<button class="btn btn-primary">
+		BUILD QUIZ
+	</button>
+	<button class="btn btn-primary" onclick="populate()">
+		POPULATE QUIZ DB
+	</button>
+</div>
+<div class="playQuiz">
+	<div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="createQuiz">
+		<form onsubmit="formSubmit(event)">
+			<div>
+				<label>
+					Question:
+				</label>
+				<input type="text" id="question" class="form-control">
+				<label>
+					Type:
+				</label>
+				<select id="typeDropdown" class="form-control">
+					<option value="none">
+					</option>
+					<option value="mcq">
+						mcq
+					</option>
+					<option value="dragndrop">
+						Drag N Drop
+					</option>
+					<option value="swipe">
+						Swipe
+					</option>
+				</select>
+				<div id="optionContainer">
+					<label>
+						Options
+					</label>
+					<input type="text" id="optionA" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option A">
+					<input type="text" id="optionB" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option B">
+					<input type="text" id="optionC" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option C">
+					<input type="text" id="optionD" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option D">
+				</div>
+				<div id="swipeOptionContainer">
+					<label>
+						Options
+					</label>
+					<input type="text" id="swipeOptionA" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option A">
+					<input type="text" id="swipeOptionB" class="col-sm-6 col-xs-12 col-md-6 col-lg-6 form-control" placeholder="option B">
+				</div>
+				<div id="optionAnswer">
+					<label>
+						Choose Correct Answer
+					</label>
+					<select id="optionAnswerSelect" class="form-control">
+						<option value=""></option>
+						<option id="optA" value=""></option>
+						<option id="optB" value=""></option>
+						<option id="optC" value=""></option>
+						<option id="optD" value=""></option>
+					</select>
+				</div>
+				<div id="swipeAnswer">
+					<select id="swipeAnswerSelect" class="form-control">
+						<option value=""></option>
+						<option id="swipeA" value=""></option>
+						<option id="swipeB" value=""></option>
+					</select>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default centerH relative" id="submitButton">Submit</button>
+		</form>
+	</div>
+	<div id="playQuiz">
+
+	</div>
+</div>
+<script type="text/javascript">
+
+	// form section 
+	$('#blindit').click(function(event) {
+		/* Act on the event */
+		$('#blindit').toggle("blind");
+	});
+	$('#optionContainer').hide();
+	$('#swipeOptionContainer').hide();
+	$('#optionAnswer').hide();
+	$('#swipeAnswer').hide();
+	var questObject = {};
+	document.getElementById('question').addEventListener("change", function() {
+		questObject.question = $('#question').val();
+	});
+	document.getElementById("typeDropdown").addEventListener('change', function() {
+		console.log("changed");
+		console.log('value is', $('#typeDropdown').val());
+		questObject.type = $('#typeDropdown').val();
+		questObject.options = [];
+		if ($('#typeDropdown').val() === "mcq" || $('#typeDropdown').val() === "dragndrop") {
+			$('#optionContainer').show();
+			$('#optionAnswer').show();
+			$('#swipeOptionContainer').hide();
+			$('#swipeAnswer').hide();
+		} else if($('#typeDropdown').val() === "swipe") {
+			$('#optionContainer').hide();
+			$('#optionAnswer').hide();
+			$('#swipeAnswer').show();
+			$('#swipeOptionContainer').show();
+		} else {
+			$('#optionContainer').hide();
+			$('#optionAnswer').hide();
+			$('#swipeAnswer').hide();
+			$('#swipeOptionContainer').hide();
+		}
+	});
+	document.getElementById("optionAnswerSelect").addEventListener("change", function() {
+		$('#submitButton').show();
+		questObject.answer = $('#optionAnswerSelect').val();
+		console.log('answer is', $('#optionAnswerSelect').val());
+	});
+	document.getElementById("swipeAnswerSelect").addEventListener('change', function() {
+		$("submitButton").show();
+		questObject.answer = $('#swipeAnswerSelect').val();
+		console.log("answer is", $('#swipeAnswerSelect').val());
+	});
+	document.getElementById("optionA").addEventListener('change', function() {
+		console.log("new value is", $('#optionA').val());
+		questObject.options[0] = $('#optionA').val();
+		$('#optA').val($('#optionA').val());
+		$('#optA').html($('#optionA').val());
+	});
+	document.getElementById("optionB").addEventListener('change', function() {
+		console.log("new value is", $('#optionB').val());
+		questObject.options[1] = $('#optionB').val();
+		$('#optB').val($('#optionB').val());
+		$('#optB').html($('#optionB').val());
+	});
+	document.getElementById("optionC").addEventListener('change', function() {
+		console.log("new value is", $('#optionC').val());
+		questObject.options[2] = $('#optionC').val();
+		$('#optC').val($('#optionC').val());
+		$('#optC').html($('#optionC').val());
+	});
+	document.getElementById("optionD").addEventListener('change', function() {
+		console.log("new value is", $('#optionD').val());
+		questObject.options[3] = $('#optionD').val();
+		$('#optD').val($('#optionD').val());
+		$('#optD').html($('#optionD').val());
+	});
+	document.getElementById("swipeOptionA").addEventListener('change', function() {
+		console.log("new value is", $('#swipeOptionA').val());
+		questObject.options[0] = $('#swipeOptionA').val();
+		$('#swipeA').val($('#swipeOptionA').val());
+		$('#swipeA').html($('#swipeOptionA').val());
+	});
+	document.getElementById("swipeOptionB").addEventListener('change', function() {
+		console.log("new vallue is", $('#swipeOptionB').val());
+		questObject.options[1] = $('#swipeOptionB').val();
+		$('#swipeB').val($('#swipeOptionB').val());
+		$('#swipeB').html($('#swipeOptionB').val());
+	});
+	function formSubmit(event) {
+		event.preventDefault();
+		console.log("question Obect is", questObject);
+		console.log("form submitting");
+		console.log(JSON.stringify(
+			questObject));
+		request("quiz/insertQuestion", 
+                    questObject, 
+                    function (data) {
+                        console.log(data);
+                    });
+	}
+
+
+
+	// play quiz
+
+
+
+
+	//populate db
+	function populate() {
+		request("quiz/populate", 
+                    '{"questObject": "hello"}', 
+                    function (data) {
+                        console.log(data);
+                    });
+	}
+</script>

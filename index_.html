@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            HomePage
+        </title>
+    </head>
+    <style id='loadCss'>
+    </style>
+    <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.3/css/mdb.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://kit.fontawesome.com/yourcode.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<body>
+    <div id="body">
+        <div id="helperjs">
+        </div>
+        <div id="loadRoutes">
+
+        </div>
+    </div>
+</body>
+<nav>
+        <ul>
+            <li class="navbutton" id="navbutton" onclick="$('#navButtons').removeClass('navButtons');$('#navButtons').addClass('show'); console.log('clicked')">
+                <i class="fa fa-bars fa-4x" aria-hidden="true"></i>
+            </li>
+            <div class="navButtons" id="navButtons">
+                <li onclick="location.href='/'">
+                <a>
+                    Home
+                </a>
+                </li>
+                <li>
+                    <a>
+                        About
+                    </a>
+                </li>
+                <li onclick="location.href='blogs'">
+                    <a>
+                        Devlogs
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        Projects
+                    </a>
+                </li>
+            </div>
+        </ul>
+    </nav>
+</html>
+<script id='scriptRoute'>
+</script>
+<script>
+    if (screen.width < 1024) {
+        document.getElementById("navbutton").className = "show";
+    }
+    document.getElementById("body").addEventListener('click', function() {
+        $('#navButtons').removeClass('show');
+        $('#navButtons').addClass('navButtons');
+    });
+    var route = $('#loadRoutes');
+    var cssRoute = $('#loadCss');
+    $('#helperjs').load('./components/helpers/helperjs.html');
+    // route.load('./d3/d3.html');
+    // route.load('./d3test/d3page.html')
+    console.log(window.location.href);
+    var urlArr = window.location.href.split("/", 100);
+    if (!urlArr[3]) {
+        route.load('./pages/home/home.html');
+        cssRoute.load('./pages/home/home.css');
+    }
+    if (urlArr[3]) {
+        route.load('./pages/' + urlArr[3] + '/' + urlArr[3] + ".html");
+        cssRoute.load('./pages/' + urlArr[3] + '/' + urlArr[3] + ".css");
+    } else {
+        document.write("<br><br><br><br>wrong url")
+    }
+</script>

@@ -1,0 +1,31 @@
+.menu{
+}
+.eachBlog {
+	height: 400px;
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.rightFloat{
+	float: right;
+}
+.modalBack{
+	background-color: black;
+	opacity: 0.5;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0px;left: 0px;
+}
+.editModal{
+	z-index: 2000;
+	overflow: scroll;
+	max-height: 80vh;
+}
+.loginForm {
+	position: fixed;
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+}

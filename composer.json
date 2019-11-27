@@ -1,0 +1,19 @@
+{
+    "name": "soumik/my_site",
+    "description": "this is my website",
+    "authors": [
+        {
+            "name": "oldsaint",
+            "email": "chakraborty.soumik23@gmail.com"
+        }
+    ],
+    "autoload": {
+    	"psr-4": {
+    		"Mysite\\": "src"
+    	}
+    },
+    "require": {
+        "firebase/php-jwt": "^5.0",
+        "rbdwllr/reallysimplejwt": "^2.1"
+    }
+}
