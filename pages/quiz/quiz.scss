@@ -1,0 +1,39 @@
+.quizContainer{
+	height: 100vh;
+	width: 100vw;
+	background-color: #333333;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+}
+#mcqQuest{
+	font-size: 2rem;
+	font-weight: bold;
+	color: white;
+}
+#swipeQuest{
+	font-size: 2rem;
+	font-weight: bold;
+	color: white;
+}
+.quizMenu{
+	height: 15vh;
+}
+.questionContainer{
+	height: 80vh;
+}
+.timer{
+	height: 5vh;
+}
+#statusBar{
+	height: 5vh;
+	background-color: white; 
+}
+.optBtn{
+	font-size: 1.5rem !important;
+}
+.draggable{
+	width: 200px;
+	height: 200px;
+	background-color: red; 
+}

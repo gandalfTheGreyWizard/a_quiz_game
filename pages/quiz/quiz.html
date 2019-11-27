@@ -5,21 +5,33 @@
 	quiz component works
 </h1>
 <div id="btnContainer">
-	<button class="btn btn-primary"> 
+	<button class="btn btn-primary" onclick="playQuiz()"> 
 		PLAY QUIZ
 	</button>
-	<button class="btn btn-primary">
+	<button class="btn btn-primary" onclick="createQuiz()">
 		BUILD QUIZ
 	</button>
 	<button class="btn btn-primary" onclick="populate()">
 		POPULATE QUIZ DB
 	</button>
 </div>
-<div class="playQuiz">
-	<div>
+<div class="playQuiz" id="playQuiz">
+	<div class="quizContainer">
+		<div class="quizMenu">
+			<button onclick="renderMenu()" class="btn btn-primary" style="color: white;font-weight: bolder;"> 
+			Menu
+			</button>
+		</div>
+		<div class="timer">
+			<div id="statusBar">
+				
+			</div> 
+		</div>
+		<div id="questionContainer">
+		</div>
 	</div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" id="createQuiz">
 	<div class="createQuiz">
 		<form onsubmit="formSubmit(event)">
 			<div>
@@ -97,6 +109,7 @@
 	$('#swipeOptionContainer').hide();
 	$('#optionAnswer').hide();
 	$('#swipeAnswer').hide();
+	$('#createQuiz').hide();
 	var questObject = {};
 	document.getElementById('question').addEventListener("change", function() {
 		questObject.question = $('#question').val();
@@ -169,6 +182,9 @@
 		$('#swipeB').val($('#swipeOptionB').val());
 		$('#swipeB').html($('#swipeOptionB').val());
 	});
+	function createQuiz() {
+		$('#createQuiz').show();
+	}
 	function formSubmit(event) {
 		event.preventDefault();
 		console.log("question Obect is", questObject);
@@ -185,8 +201,64 @@
 
 
 	// play quiz
-
-
+	$('#playQuiz').hide();
+	function playQuiz() {
+		hidenavbar();
+		$('#playQuiz').show();
+		$('#btnContainer').hide();
+		$('#createQuiz').hide();
+		startQuiz();
+	}
+	function startQuiz() {
+		var maxquestions = 3;
+		var currentQuestionId = 1;
+		var timerCount = 100;
+		getQuiz(4);
+		// var interval = setInterval(function() {
+		// 	if (timerCount > 0) {
+		// 		timerCount -= 1;
+		// 		$('#statusBar').css('width', timerCount + "vw");
+		// 	} else {
+		// 		if (currentQuestionId < maxquestions) {
+		// 			currentQuestionId++;
+		// 			timerCount = 100;
+		// 			getQuiz(currentQuestionId);
+		// 		} else {
+		// 				clearInterval(interval);
+		// 			}
+		// 	}
+		// 	console.log("interval works");
+		// }, 100);
+	}
+	function getQuiz(id) {
+		var requestQuestBody = {};
+		requestQuestBody.id = id;
+		request("quiz/getQuestion", 
+                requestQuestBody, 
+                function (data) {
+                	if (data.type === 'mcq') {
+                		$('#questionContainer').load('../../components/quizComponents/mcq.html', function() {
+		                		console.log(data);
+					            var newQuestionObject = new questionObject(data.question, data.options);
+								console.log('new quest is', newQuestionObject);
+								newQuestionObject.renderQuestion();
+							});
+                	} else if (data.type === 'swipe') {
+                		$('#questionContainer').load('../../components/quizComponents/swipe.html', function() {
+		                		console.log(data);
+					            var newQuestionObject = new swipeObject(data.question, data.options);
+								console.log('new quest is', newQuestionObject);
+								newQuestionObject.renderQuestion();
+							});
+                	}
+                });
+		console.log("loadig questions completed");
+	}
+	function renderMenu() {
+		shownavbar();
+		$('#playQuiz').hide();
+		$('#btnContainer').show();
+	}
 
 
 	//populate db

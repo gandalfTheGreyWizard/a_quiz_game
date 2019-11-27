@@ -4,6 +4,7 @@
         <title>
             HomePage
         </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <style id='loadCss'>
     </style>
@@ -17,6 +18,7 @@
     crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/animate.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.3/css/mdb.min.css" rel="stylesheet">
@@ -33,10 +35,10 @@
         </div>
     </div>
 </body>
-<nav>
+<nav id="navbarId">
         <ul>
             <li class="navbutton" id="navbutton" onclick="$('#navButtons').removeClass('navButtons');$('#navButtons').addClass('show'); console.log('clicked')">
-                <i class="fa fa-bars fa-4x" aria-hidden="true"></i>
+                <i class="fa fa-bars fa-x" aria-hidden="true"></i>
             </li>
             <div class="navButtons" id="navButtons">
                 <li onclick="location.href='/'">
@@ -89,5 +91,11 @@
         cssRoute.load('./pages/' + urlArr[3] + '/' + urlArr[3] + ".css");
     } else {
         document.write("<br><br><br><br>wrong url")
+    }
+    function hidenavbar() {
+        $('#navbarId').hide();
+    }
+    function shownavbar() {
+        $('#navbarId').show();
     }
 </script>

@@ -1,0 +1,29 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10 text-center" id="mcqQuest" >
+		</div>
+		<div class="col-sm-1"></div><br><br>
+		<div id="options" class="col-sm-12 col-xs-12 col-md-12 col-lg-12 center absolute">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var questionObject = function (question, options) {
+		this.question = question;
+		this.options = options;
+
+		this.renderQuestion = function() {
+			$('#mcqQuest').html(this.question);
+			this.options.forEach((element, index) => {
+				var optionBtn = document.createElement("button");
+				optionBtn.innerHTML = element;
+				optionBtn.className = 'btn btn-default optBtn col-sm-8 col-xs-12 col-lg-6 col-md-6 centerH relative';
+				optionBtn.addEventListener('click', function() {
+					console.log('clicked data', this.innerHTML);
+				});
+				document.getElementById("options").appendChild(optionBtn);
+			});
+		}
+	}
+</script>
